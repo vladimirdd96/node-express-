@@ -1,8 +1,3 @@
-const pageNotFound = (req, res, next) => {
-  res.status(404).render("404", { pageTitle: "Page not found ejs", path: "" });
-};
-
-
-module.exports = {
-    pageNotFound
+exports.get404 = (req, res, next) => {
+  res.status(404).render('404', { pageTitle: 'Page Not Found', path: '/404' });
 };
