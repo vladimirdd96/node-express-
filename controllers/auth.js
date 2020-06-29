@@ -1,5 +1,16 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
+const mailgunTransport = require("nodemailer-mailgun-transport");
+
+const trasporter = nodemailer.createTransport(
+  mailgunTransport({
+    auth: {
+      api_key: "12f7a0f64e5323f48795aad00d43483b-913a5827-1c7c078c",
+      domain: "sandbox40579021b16244218611f0b79efe2e68.mailgun.org"
+    }
+  })
+);
 
 exports.getSignup = (req, res, next) => {
   let message = req.flash("existingEmail");
@@ -43,6 +54,15 @@ exports.postSignup = (req, res, next) => {
         })
         .then(result => {
           res.redirect("/login");
+          return trasporter
+            .sendMail({
+              to: email,
+              from: "shop@nodecomplete.com",
+              subject: "SignUp completed",
+              html:
+                "<h1>You have successfully completed sign up action to this online shop!</h1>"
+            })
+            .catch(err => console.log(err));
         });
     })
     .catch(err => console.log("postSignUp error"));

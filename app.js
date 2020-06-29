@@ -14,6 +14,8 @@ const shopRoutes = require("./routes/shop");
 const authRoutes = require("./routes/auth");
 
 const User = require("./models/user");
+
+
 const MONGODB_URI =
   "mongodb+srv://banea9:stonnerexe95@cluster0-wgehi.mongodb.net/shop?retryWrites=true&w=majority";
 const app = express();
@@ -36,7 +38,7 @@ app.use(
   })
 );
 app.use(csrfProtection);
-app.use(flash())
+app.use(flash());
 app.use((req, res, next) => {
   if (!req.session.user) {
     next();
