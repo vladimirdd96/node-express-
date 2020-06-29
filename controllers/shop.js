@@ -7,7 +7,8 @@ exports.getIndex = (req, res, next) => {
       res.render("shop/index", {
         prods: products.slice(0, 3),
         pageTitle: "Shop",
-        path: "/"
+        path: "/",
+        isLoggedIn: req.session.isLoggedIn
       });
     })
     .catch(err => console.log("getIndex error"));
@@ -19,7 +20,8 @@ exports.getProducts = (req, res, next) => {
       res.render("shop/product-list", {
         prods: products,
         pageTitle: "Shop",
-        path: "/products"
+        path: "/products",
+        isLoggedIn: req.session.isLoggedIn
       });
     })
     .catch(err => console.log("getProducts error"));
@@ -31,7 +33,8 @@ exports.getProduct = (req, res, next) => {
     res.render("shop/product-detail", {
       product: product,
       pageTitle: product.title,
-      path: "/products"
+      path: "/products",
+      isLoggedIn: req.session.isLoggedIn
     });
   });
 };
@@ -44,7 +47,8 @@ exports.getCart = (req, res, next) => {
       res.render("shop/cart", {
         products: user.cart.items,
         path: "/cart",
-        pageTitle: "Your Cart"
+        pageTitle: "Your Cart",
+        isLoggedIn: req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err));
@@ -102,7 +106,8 @@ exports.getOrders = (req, res, next) => {
       res.render("shop/orders", {
         orders: orders,
         path: "/orders",
-        pageTitle: "Your Orders"
+        pageTitle: "Your Orders",
+        isLoggedIn: req.session.isLoggedIn
       });
     })
     .catch(err => console.log("getOrders error"));
