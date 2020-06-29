@@ -2,24 +2,23 @@ const Product = require("../models/product");
 
 exports.getProducts = (req, res, next) => {
   Product.find()
-  // .populate('userId')
+    // .populate('userId')
     .then(products => {
       res.render("admin/products", {
         prods: products,
         pageTitle: "Admin Products",
         path: "/admin/products",
-        isLoggedIn: req.session.isLoggedIn
       });
     })
     .catch(err => console.log("getProducts for admin error"));
 };
 
 exports.getAddProduct = (req, res, next) => {
+
   res.render("admin/edit-product", {
     pageTitle: "Add Product",
     path: "/admin/add-product",
     editing: false,
-    isLoggedIn: req.session.isLoggedIn
   });
 };
 
@@ -54,7 +53,6 @@ exports.getEditProduct = (req, res, next) => {
         pageTitle: "Edit Product",
         path: "/admin/edit-product",
         editing: editMode,
-        isLoggedIn: req.session.isLoggedIn
       });
     })
     .catch(err => console.log("getEditProduct error"));

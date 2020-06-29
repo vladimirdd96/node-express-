@@ -8,7 +8,6 @@ exports.getIndex = (req, res, next) => {
         prods: products.slice(0, 3),
         pageTitle: "Shop",
         path: "/",
-        isLoggedIn: req.session.isLoggedIn
       });
     })
     .catch(err => console.log("getIndex error"));
@@ -21,7 +20,6 @@ exports.getProducts = (req, res, next) => {
         prods: products,
         pageTitle: "Shop",
         path: "/products",
-        isLoggedIn: req.session.isLoggedIn
       });
     })
     .catch(err => console.log("getProducts error"));
@@ -34,7 +32,6 @@ exports.getProduct = (req, res, next) => {
       product: product,
       pageTitle: product.title,
       path: "/products",
-      isLoggedIn: req.session.isLoggedIn
     });
   });
 };
@@ -48,7 +45,6 @@ exports.getCart = (req, res, next) => {
         products: user.cart.items,
         path: "/cart",
         pageTitle: "Your Cart",
-        isLoggedIn: req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err));
@@ -71,7 +67,6 @@ exports.postCartDeleteItem = (req, res, next) => {
   req.user
     .removeFromCart(prodId)
     .then(cart => {
-      console.log(cart.cart.items);
       res.redirect("/cart");
     })
     .catch(err => console.log("postCartDeleteItem"));
@@ -87,7 +82,7 @@ exports.postOrder = (req, res, next) => {
       });
       const order = new Order({
         products: products,
-        user: { name: req.user.name, userId: req.user._id }
+        user: { email: req.user.email, userId: req.user._id }
       });
       return order.save();
     })
@@ -97,7 +92,7 @@ exports.postOrder = (req, res, next) => {
     .then(() => {
       res.redirect("/cart");
     })
-    .catch(err => console.log("postOrder"));
+    .catch(err => console.log("postOrder error"));
 };
 
 exports.getOrders = (req, res, next) => {
@@ -107,7 +102,6 @@ exports.getOrders = (req, res, next) => {
         orders: orders,
         path: "/orders",
         pageTitle: "Your Orders",
-        isLoggedIn: req.session.isLoggedIn
       });
     })
     .catch(err => console.log("getOrders error"));
